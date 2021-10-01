@@ -9,7 +9,7 @@ const Search = () => {
       if (query === "" || query === " ")
         alert("Search filed empty. Please input something!!!");
       else {
-        const url = `http://hn.algolia.com/api/v1/search?query=${query}`;
+        const url = `https://hn.algolia.com/api/v1/search?query=${query}`;
         try {
           let response = await fetch(url);
           response = await response.json();

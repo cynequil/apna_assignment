@@ -9,7 +9,7 @@ const Post = () => {
 
   useEffect(() => {
     const getPost = async () => {
-      const url = `http://hn.algolia.com/api/v1/items/${object_id}`;
+      const url = `https://hn.algolia.com/api/v1/items/${object_id}`;
       try {
         let response = await fetch(url);
         response = await response.json();
