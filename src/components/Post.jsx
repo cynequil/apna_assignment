@@ -1,11 +1,17 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { isobject_id, post_response, resolve_children } from "../actions";
+import {
+  isobject_id,
+  post_response,
+  resolve_children,
+  ispost_res,
+} from "../actions";
 const Post = () => {
   const dispatch = useDispatch();
   const object_id = useSelector((state) => state.object_id);
   const post = useSelector((state) => state.post);
   const children = useSelector((state) => state.children);
+  const ispostloading = useSelector((state) => state.ispostloading);
 
   useEffect(() => {
     const getPost = async () => {
@@ -16,6 +22,7 @@ const Post = () => {
         console.log(response);
         dispatch(post_response(response));
         dispatch(resolve_children(response.children));
+        dispatch(ispost_res(false));
       } catch (e) {
         if (e instanceof TypeError) {
           alert("Network Unavailable!! Check Connection.");
@@ -24,30 +31,38 @@ const Post = () => {
         dispatch(isobject_id(false));
       }
     };
-    if (isobject_id) getPost();
+    if (isobject_id) {
+      getPost();
+    }
   }, [object_id, dispatch]);
   return (
-    <div className="post">
-      <h2 className="post__title">
-        {post.title === "" ? "Title Unavailable" : post.title}
-      </h2>
-      <p className="post__points">Points - {post.points}</p>
-      <p className="post__author">By - {post.author}</p>
-      {children.map((child) => {
-        return (
-          <div className="comment" key={child.objectID}>
-            <div
-              className="comment__text"
-              dangerouslySetInnerHTML={{ __html: child.text }}
-            ></div>
-            <div
-              className="comment__author"
-              dangerouslySetInnerHTML={{ __html: child.author }}
-            ></div>
-          </div>
-        );
-      })}
-    </div>
+    <>
+      {ispostloading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <div className="post">
+          <h2 className="post__title">
+            {post.title === "" ? "Title Unavailable" : post.title}
+          </h2>
+          <p className="post__points">Points - {post.points}</p>
+          <p className="post__author">By - {post.author}</p>
+          {children.map((child) => {
+            return (
+              <div className="comment" key={child.objectID}>
+                <div
+                  className="comment__text"
+                  dangerouslySetInnerHTML={{ __html: child.text }}
+                ></div>
+                <div
+                  className="comment__author"
+                  dangerouslySetInnerHTML={{ __html: child.author }}
+                ></div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </>
   );
 };
 

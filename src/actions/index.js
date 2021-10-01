@@ -4,6 +4,7 @@ export const search_response = (payload) => {
     payload,
   };
 };
+
 export const object_id = (payload) => {
   return {
     type: "OBJECT_ID",
@@ -21,6 +22,12 @@ export const isobject_id = (payload) => {
 export const post_response = (payload) => {
   return {
     type: "POST_RESPONSE",
+    payload,
+  };
+};
+export const ispost_res = (payload) => {
+  return {
+    type: "ISPOSTLOADING",
     payload,
   };
 };

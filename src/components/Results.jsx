@@ -1,11 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
-import { object_id, isobject_id } from "../actions";
+import { object_id, isobject_id, ispost_res } from "../actions";
 const Results = () => {
   const dispatch = useDispatch();
   const response = useSelector((state) => state.search_response);
   const handleClick = (e) => {
     dispatch(object_id(e.target.value));
     dispatch(isobject_id(true));
+    dispatch(ispost_res(true));
   };
   return (
     <div className="results">
